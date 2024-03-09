@@ -153,6 +153,14 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        "title" => "タイトル",
+        "content" => "内容",
+        "begin" => "開始日",
+        "end" => "終了日",
+        "status" => "ステータス",
+        "published" => "公開/非公開",
+        "remarks" => "備考",
+    ],
 
 ];
