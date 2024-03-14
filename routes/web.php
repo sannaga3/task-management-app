@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\TimerController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -27,6 +28,7 @@ Route::get('/', function () {
 });
 
 Route::resource('/tasks', TaskController::class)->middleware(['auth', 'verified']);
+Route::resource('/timers', TimerController::class);
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

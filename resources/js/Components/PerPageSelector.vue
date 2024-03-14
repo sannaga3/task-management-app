@@ -8,7 +8,7 @@ const props = defineProps({
     type: Object,
     required: true,
   },
-  getNewData: {
+  fetchPageData: {
     type: Function,
     required: true,
   },
@@ -24,7 +24,7 @@ const changePerPage = async (newPerPageIndex) => {
   const newPerPage = props.perPageItems[Number(newPerPageIndex)];
 
   if (props.refMeta.per_page !== newPerPage) {
-    await props.getNewData(newPerPage, 1);
+    await props.fetchPageData(newPerPage, 1);
     selectedPerPage.value = newPerPage;
   }
 };

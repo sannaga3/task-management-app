@@ -1,13 +1,16 @@
 <script setup>
 import FlashMessage from "@/Components/FlashMessage.vue";
 import PageTitle from "@/Components/PageTitle.vue";
+import TimerList from "@/Components/TimerList.vue";
 import { convertPublished, convertStatus } from "@/Composable/Task//modules";
 import { nl2br } from "@/Composable/util";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, Link, router } from "@inertiajs/vue3";
 
-defineProps({
+const props = defineProps({
+  timers: Object,
   task: Object,
+  meta: Object,
 });
 
 const rowStyle =
@@ -97,6 +100,9 @@ const handleDelete = (id) => {
           </div>
         </div>
       </div>
+    </div>
+    <div class="p-5">
+      <TimerList :timers="timers" :meta="meta" :task="task" />
     </div>
   </AuthenticatedLayout>
 </template>

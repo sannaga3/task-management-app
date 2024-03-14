@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\PaginationService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -26,6 +27,11 @@ class Task extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function timers()
+    {
+        $this->hasMany(Timer::class)->orderByDesc('id');
     }
 
     public function scopeWithUser($query, $isShowOrEdit = false)

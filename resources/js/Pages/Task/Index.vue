@@ -17,7 +17,7 @@ const props = defineProps({
 const [refTasks, refMeta, refDisplayPageNumbers, updatePaginator] =
     usePaginator(props.tasks, props.meta);
 
-const getNewTasks = async (perPage, page) => {
+const fetchTaskData = async (perPage, page) => {
     const res = await fetch(
         `/api/searchTaskList?per_page=${perPage}&page=${page}`
     );
@@ -36,9 +36,12 @@ const getNewTasks = async (perPage, page) => {
                 <Pagination
                     :refMeta="refMeta"
                     :refDisplayPageNumbers="refDisplayPageNumbers"
-                    :fetchNewData="getNewTasks"
+                    :fetchPageData="fetchTaskData"
                 />
-                <PerPageSelector :refMeta="refMeta" :getNewData="getNewTasks" />
+                <PerPageSelector
+                    :refMeta="refMeta"
+                    :fetchPageData="fetchTaskData"
+                />
             </div>
             <table class="table-auto w-full text-left whitespace-no-wrap mb-5">
                 <thead>

@@ -8,7 +8,7 @@ const props = defineProps({
     type: Array,
     required: true,
   },
-  fetchNewData: {
+  fetchPageData: {
     type: Function,
     required: true,
   },
@@ -16,7 +16,7 @@ const props = defineProps({
 
 const changePage = async (nextPage) => {
   if (props.refMeta.current_page !== nextPage)
-    await props.fetchNewData(props.refMeta.per_page, nextPage);
+    await props.fetchPageData(props.refMeta.per_page, nextPage);
 };
 </script>
 

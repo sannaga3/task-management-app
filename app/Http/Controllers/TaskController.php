@@ -6,17 +6,19 @@ use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 use App\Models\Task;
 use App\Services\TaskService;
+use App\Services\TimerService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class TaskController extends Controller
 {
     protected $taskService;
+    protected $timerService;
 
-    public function __construct(TaskService $taskService)
+    public function __construct(TaskService $taskService, TimerService $timerService)
     {
         $this->taskService = $taskService;
+        $this->timerService = $timerService;
     }
 
     /**
@@ -57,18 +59,31 @@ class TaskController extends Controller
     {
         Task::create($request->all());
 
-        return to_route('tasks.index')->with(['message' => '登録成功', 'status' => 'success']);
+        return to_route('tasks.index')->with(['message' => 'タスクを作成しました', 'status' => 'success']);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(int $id)
+    public function show(int $id, Request $request)
     {
-        $task = Task::where('tasks.id', $id)->withUser(true)->first();
+        $perPage = isset($request) ? $request['per_page'] : 10;
+        $page = isset($request) ? $request['page'] : 1;
+
+        $task = Task::where('tasks.id', $id)
+            ->withUser(true)
+            ->first();
+
+        $timers = $this->timerService->getTimerList(
+            $id,
+            $perPage,
+            $page
+        );
 
         return Inertia::render('Task/Show', [
             'task' => $task,
+            'timers' => $timers['data'],
+            'meta' => $timers['meta'],
         ]);
     }
 
@@ -77,7 +92,7 @@ class TaskController extends Controller
      */
     public function edit(int $id)
     {
-        $task = Task::where('tasks.id', $id)->withUser()->first();
+        $task = Task::where('tasks.id', $id)->withUser(true)->first();
 
         return Inertia::render('Task/Edit', [
             'task' => $task,
@@ -93,7 +108,7 @@ class TaskController extends Controller
 
         return redirect()
             ->route('tasks.show', $task)
-            ->with(['message' => '編集成功', 'status' => 'success']);
+            ->with(['message' => 'タスクを更新しました', 'status' => 'success']);
     }
 
     /**

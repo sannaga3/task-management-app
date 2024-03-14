@@ -13,7 +13,7 @@ const props = defineProps({
   errors: Object,
   task: {
     type: Object,
-    default: false,
+    default: null,
   },
 });
 
