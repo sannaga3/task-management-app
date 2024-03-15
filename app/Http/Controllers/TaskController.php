@@ -8,6 +8,7 @@ use App\Models\Task;
 use App\Services\TaskService;
 use App\Services\TimerService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class TaskController extends Controller
@@ -57,6 +58,8 @@ class TaskController extends Controller
      */
     public function store(StoreTaskRequest $request)
     {
+        $userId = Auth::user()->id;
+        $request->merge(['user_id' => $userId]);
         Task::create($request->all());
 
         return to_route('tasks.index')->with(['message' => 'タスクを作成しました', 'status' => 'success']);
@@ -74,16 +77,19 @@ class TaskController extends Controller
             ->withUser(true)
             ->first();
 
-        $timers = $this->timerService->getTimerList(
+        $timers = $this->timerService->searchTimerList(
             $id,
             $perPage,
             $page
         );
 
+        $totalTime = $this->timerService->searchTotalTime($timers['data']);
+
         return Inertia::render('Task/Show', [
             'task' => $task,
             'timers' => $timers['data'],
             'meta' => $timers['meta'],
+            'total_time' => $totalTime,
         ]);
     }
 

@@ -28,3 +28,16 @@ export const formatElapsedTime = (seconds) => {
         .toString()
         .padStart(2, "0")}:${remainingSeconds.toString().padStart(2, "0")}`;
 };
+
+export const formatTargetTimeToSeconds = (hours, minutes) => {
+    return hours * 3600 + minutes + 60;
+};
+
+export const splitTargetTimeIntoHoursAndMinutes = (targetTime) => {
+    if (typeof targetTime !== "number") return [0, 0];
+
+    const hours = Math.floor(targetTime / 3600);
+    const remainingSeconds = targetTime % 3600;
+    const minutes = Math.floor(remainingSeconds / 60);
+    return [hours, minutes];
+};

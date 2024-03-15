@@ -17,6 +17,7 @@ class TaskFactory extends Factory
         return [
             'title' => substr($this->faker->sentence(), 0, 10),
             'content' => substr($this->faker->sentence(), 0, 30),
+            'target_time' => rand(1800, 18000),
             'begin' => $this->faker->date(),
             'status' => rand(0, 2),
             'published' => $this->faker->boolean(),

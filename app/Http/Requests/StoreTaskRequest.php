@@ -24,6 +24,7 @@ class StoreTaskRequest extends FormRequest
         return [
             "title" => ['required', 'max:20'],
             "content" => ['max:30'],
+            "target_time" => ['required', 'integer'],
             "begin" => ['required', 'date'],
             "end" => ["nullable", 'date', 'after:begin'],
             "status" => ['required', 'integer', 'between:0,2'],

@@ -16,8 +16,10 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             // UserSeeder::class,
+        ]);
+        Task::factory(50)->create();
+        $this->call([
             TimerSeeder::class,
         ]);
-        // Task::factory(50)->create();
     }
 }

@@ -5,6 +5,7 @@ import PerPageSelector from "@/Components/PerPageSelector.vue";
 import TimerCreateForm from "@/Components/TimerCreateForm.vue";
 import TimerEditForm from "@/Components/TimerEditForm.vue";
 import usePaginator from "@/Composable/usePaginator.js";
+import { splitTargetTimeIntoHoursAndMinutes } from "@/Composable/util.js";
 import { router } from "@inertiajs/vue3";
 import { ref, watch } from "vue";
 
@@ -12,7 +13,16 @@ const props = defineProps({
   timers: Array,
   task: Object,
   meta: Object,
+  total_time: Number,
 });
+
+const [targetHours, targetMinutes] = splitTargetTimeIntoHoursAndMinutes(
+  props.task.target_time
+);
+
+const [totalHours, totalMinutes] = splitTargetTimeIntoHoursAndMinutes(
+  props.total_time
+);
 
 const [refTimers, refMeta, refDisplayPageNumbers, updatePaginator] =
   usePaginator(props.timers, props.meta);
@@ -55,8 +65,23 @@ const getTimerList = async (perPage, page) => {
 
 <template>
   <h3 class="text-lg text-center font-semibold">タスク実行履歴</h3>
+
   <div class="lg:w-3/4 w-full mx-auto overflow-auto mb-5">
-    <div class="flex justify-end mb-3">
+    <div class="flex justify-between mb-3 mt-2">
+      <div class="flex border-b border-gray-900 space-x-5 mt-4">
+        <div class="flex px-2 space-x-3">
+          <div>目標時間 :</div>
+          <div>{{ targetHours }} 時間 {{ targetMinutes }} 分</div>
+        </div>
+        <div class="flex px-2 space-x-3">
+          <div>実行済 :</div>
+          <div>{{ totalHours }} 時間 {{ totalMinutes }} 分</div>
+        </div>
+        <div class="flex px-2 space-x-3">
+          <div>達成率 :</div>
+          <div>{{ Math.floor((total_time / task.target_time) * 100) }} %</div>
+        </div>
+      </div>
       <button
         v-if="task.status === 1"
         @click="handleOpenModal()"

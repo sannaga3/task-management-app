@@ -5,9 +5,13 @@ import Select from "@/Components/Select.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { publishedMap, statusMap } from "@/Composable/Task/constants";
 import useSelectChange from "@/Composable/useSelectChange";
+import {
+  formatTargetTimeToSeconds,
+  splitTargetTimeIntoHoursAndMinutes,
+} from "@/Composable/util.js";
 import { router } from "@inertiajs/vue3";
 import dayjs from "dayjs";
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 
 const props = defineProps({
   errors: Object,
@@ -24,10 +28,18 @@ const [selectedStatus, handleChangeStatus] = useSelectChange(defaultStatus);
 const [selectedPublished, handleChangePublished] =
   useSelectChange(defaultPublished);
 
+const [hours, minutes] = splitTargetTimeIntoHoursAndMinutes(
+  props?.task?.target_time
+);
+
+const refTargetTimeHours = ref(hours);
+const refTargetTimeMinutes = ref(minutes);
+
 const form = props?.task
   ? reactive({
       title: props.task.title,
       content: props.task?.content || null,
+      target_time: props.task.target_time,
       begin: props.task.begin,
       end: props.task?.end || null,
       status: selectedStatus,
@@ -37,6 +49,7 @@ const form = props?.task
   : reactive({
       title: null,
       content: null,
+      target_time: 0,
       begin: dayjs().format("YYYY-MM-DD"),
       end: null,
       status: selectedStatus,
@@ -45,6 +58,11 @@ const form = props?.task
     });
 
 function submit() {
+  form.target_time = formatTargetTimeToSeconds(
+    refTargetTimeHours.value,
+    refTargetTimeMinutes.value
+  );
+
   props?.task
     ? router.put(`/tasks/${props.task.id}`, form)
     : router.post("/tasks", form);
@@ -85,6 +103,32 @@ const inputStyle =
                       value="内容"
                     />
                     <textarea v-model="form.content" :class="inputStyle" />
+                  </div>
+
+                  <div>
+                    <InputLabel
+                      for="target_time"
+                      class="pb-1 text-sm text-gray-600"
+                      value="目標時間"
+                    />
+                    <div class="flex space-x-2 items-center">
+                      <input
+                        type="number"
+                        min="0"
+                        max="99"
+                        v-model="refTargetTimeHours"
+                        class="w-20 border rounded-lg h-8 text-xs"
+                      />
+                      <div>時間</div>
+                      <input
+                        type="number"
+                        min="0"
+                        max="99"
+                        v-model="refTargetTimeMinutes"
+                        class="w-20 border rounded-lg h-8 text-xs"
+                      />
+                      <div>分</div>
+                    </div>
                   </div>
 
                   <div class="flex space-x-5">

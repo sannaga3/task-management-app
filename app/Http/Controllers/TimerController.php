@@ -22,7 +22,7 @@ class TimerController extends Controller
      */
     public function index(Request $request)
     {
-        $result = $this->timerService->getTimerList(
+        $result = $this->timerService->searchTimerList(
             $request['task_id'],
             $request['per_page'],
             $request['page']

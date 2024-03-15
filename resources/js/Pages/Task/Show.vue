@@ -11,6 +11,7 @@ const props = defineProps({
   timers: Object,
   task: Object,
   meta: Object,
+  total_time: Number,
 });
 
 const rowStyle =
@@ -102,7 +103,12 @@ const handleDelete = (id) => {
       </div>
     </div>
     <div class="p-5">
-      <TimerList :timers="timers" :meta="meta" :task="task" />
+      <TimerList
+        :timers="timers"
+        :meta="meta"
+        :task="task"
+        :total_time="total_time"
+      />
     </div>
   </AuthenticatedLayout>
 </template>
