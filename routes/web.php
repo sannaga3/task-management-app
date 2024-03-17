@@ -28,6 +28,7 @@ Route::get('/', function () {
 });
 
 Route::resource('/tasks', TaskController::class)->middleware(['auth', 'verified']);
+Route::get('/task_aggregate', [TaskController::class, 'aggregate'])->middleware(['auth', 'verified'])->name('tasks.aggregate');
 Route::resource('/timers', TimerController::class);
 
 Route::get('/dashboard', function () {

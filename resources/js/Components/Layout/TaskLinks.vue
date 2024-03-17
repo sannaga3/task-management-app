@@ -46,9 +46,13 @@ import NavLink from "@/Components/NavLink.vue";
             >
               タスク作成
             </NavLink>
-            <!-- <NavLink :href="route('logout')" method="post" as="button">
-              <span class="text-lg">Log Out</span>
-            </NavLink> -->
+            <NavLink
+              :href="route('tasks.aggregate')"
+              :active="route().current('tasks.aggregate')"
+              class="inline-flex items-center px-4 pt-2 pb-1 border-b-2 border-indigo-500 text-md font-medium leading-5 text-gray-900 focus:outline-none focus:border-indigo-700 transition duration-150 ease-in-out"
+            >
+              集計
+            </NavLink>
           </div>
         </template>
       </Dropdown>
