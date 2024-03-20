@@ -6,6 +6,7 @@ import PerPageSelector from "@/Components/PerPageSelector.vue";
 import { convertPublished, convertStatus } from "@/Composable/Task//modules";
 import usePaginator from "@/Composable/usePaginator.js";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import apiClient from "@/lib.js";
 import { Head, Link } from "@inertiajs/vue3";
 
 const props = defineProps({
@@ -18,10 +19,9 @@ const [refTasks, refMeta, refDisplayPageNumbers, updatePaginator] =
     usePaginator(props.tasks, props.meta);
 
 const fetchTaskData = async (perPage, page) => {
-    const res = await fetch(
+    const data = await apiClient.get(
         `/api/searchTaskList?per_page=${perPage}&page=${page}`
     );
-    const data = await res.json();
     updatePaginator(data.tasks, data.meta);
 };
 </script>

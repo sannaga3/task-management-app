@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\TaskController;
+use App\Http\Controllers\Api\AggregateController;
+use App\Http\Controllers\Api\TaskController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -15,8 +16,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// sanctumの設定を行うとcorsエラーになる為 一旦middleware('auth:sanctum')->を省く
-Route::get('/searchTaskList', [TaskController::class, "searchTaskList"])->name('api.taskList');
+Route::middleware('auth:sanctum')->get('/searchTaskList', [TaskController::class, "searchTaskList"])->name('api.taskList');
+Route::middleware('auth:sanctum')->get('/search_aggregate', [AggregateController::class, 'searchAggregate'])->name('api.search_aggregate');
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
-use App\Models\Aggregate;
 use App\Models\Task;
 use App\Services\TaskService;
 use App\Services\TimerService;
@@ -31,16 +30,6 @@ class TaskController extends Controller
         $result = $this->taskService->getTaskList($request);
 
         return Inertia::render('Task/Index', [
-            'tasks' => $result['data'],
-            'meta' => $result['meta'],
-        ]);
-    }
-
-    public function searchTaskList(Request $request)
-    {
-        $result = $this->taskService->getTaskList($request);
-
-        return response()->json([
             'tasks' => $result['data'],
             'meta' => $result['meta'],
         ]);
@@ -130,14 +119,5 @@ class TaskController extends Controller
         return redirect()
             ->route('tasks.index')
             ->with(['message' => $message, 'status' => 'danger']);
-    }
-
-    public function aggregate()
-    {
-        $aggregate = Aggregate::first();
-
-        return Inertia::render('Task/Aggregate', [
-            'aggregate' => $aggregate,
-        ]);
     }
 }

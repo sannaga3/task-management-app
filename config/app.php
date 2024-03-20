@@ -170,6 +170,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\PaginationServiceProvider::class,
         App\Providers\TaskServiceProvider::class,
+        Laravel\Sanctum\SanctumServiceProvider::class,
     ])->toArray(),
 
     /*
