@@ -1,8 +1,8 @@
 <script setup>
 import FlashMessage from "@/Components/FlashMessage.vue";
 import PageTitle from "@/Components/PageTitle.vue";
-import TimerList from "@/Components/TimerList.vue";
-import { convertPublished, convertStatus } from "@/Composable/Task//modules";
+import TimerList from "@/Components/Timer/TimerList.vue";
+import { convertPublished, convertStatus } from "@/Composable/Task/modules";
 import { nl2br } from "@/Composable/util";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, Link, router } from "@inertiajs/vue3";

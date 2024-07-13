@@ -1,10 +1,10 @@
 <script setup>
 import Modal from "@/Components/Modal.vue";
-import Pagination from "@/Components/Pagination.vue";
-import PerPageSelector from "@/Components/PerPageSelector.vue";
-import TimerCreateForm from "@/Components/TimerCreateForm.vue";
-import TimerEditForm from "@/Components/TimerEditForm.vue";
-import usePaginator from "@/Composable/usePaginator.js";
+import Pagination from "@/Components/Pagination/Pagination.vue";
+import PerPageSelector from "@/Components/Pagination/PerPageSelector.vue";
+import TimerCreateForm from "@/Components/Timer/TimerCreateForm.vue";
+import TimerEditForm from "@/Components/Timer/TimerEditForm.vue";
+import usePaginator from "@/Composable/Pagination/usePaginator.js";
 import { splitTargetTimeIntoHoursAndMinutes } from "@/Composable/util.js";
 import { router } from "@inertiajs/vue3";
 import { ref, watch } from "vue";
@@ -167,3 +167,4 @@ const getTimerList = async (perPage, page) => {
     </Modal>
   </div>
 </template>
+@/Composable/Pagination/usePaginator.js
