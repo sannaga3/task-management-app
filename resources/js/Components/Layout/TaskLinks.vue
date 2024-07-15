@@ -53,6 +53,13 @@ import NavLink from "@/Components/NavLink.vue";
             >
               集計
             </NavLink>
+            <NavLink
+              :href="route('timers.history')"
+              :active="route().current('timers.history')"
+              class="inline-flex items-center px-4 pt-2 pb-1 border-b-2 border-indigo-500 text-md font-medium leading-5 text-gray-900 focus:outline-none focus:border-indigo-700 transition duration-150 ease-in-out"
+            >
+              進捗履歴
+            </NavLink>
           </div>
         </template>
       </Dropdown>

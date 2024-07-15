@@ -6,7 +6,10 @@ use App\Http\Requests\StoreTimerRequest;
 use App\Http\Requests\UpdateTimerRequest;
 use App\Models\Timer;
 use App\Services\TimerService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 class TimerController extends Controller
 {
@@ -77,5 +80,32 @@ class TimerController extends Controller
         return redirect()
             ->route('tasks.show', $taskId)
             ->with(['message' => $message, 'status' => 'danger']);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function getHistory(Request $request)
+    {
+        $year = $request->input('year');
+        $month = $request->input('month');
+
+        $formattedMonth = str_pad($month, 2, '0', STR_PAD_LEFT);
+        $userId = Auth::user()->id;
+
+        $histories = Timer::select([
+            'timers.*',
+            'ts.title',
+            'ts.content',
+            'ts.user_id'
+        ])
+            ->join('tasks As ts', 'ts.id', '=', 'timers.task_id')
+            ->where('ts.user_id', $userId)
+            ->where('timers.start_time', 'like', $year . '-' . $formattedMonth . '%')
+            ->whereNull('timers.deleted_at')
+            ->whereNull('ts.deleted_at')
+            ->get();
+
+        return response()->json($histories);
     }
 }

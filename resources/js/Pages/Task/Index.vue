@@ -3,7 +3,7 @@ import FlashMessage from "@/Components/FlashMessage.vue";
 import PageTitle from "@/Components/PageTitle.vue";
 import Pagination from "@/Components/Pagination/Pagination.vue";
 import PerPageSelector from "@/Components/Pagination/PerPageSelector.vue";
-import usePaginator from "@/Composable/Paginate/usePaginator.js";
+import usePaginator from "@/Composable/Pagination/usePaginator.js";
 import { convertPublished, convertStatus } from "@/Composable/Task//modules";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import apiClient from "@/lib.js";

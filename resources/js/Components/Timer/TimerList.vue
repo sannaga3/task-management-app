@@ -4,12 +4,13 @@ import Pagination from "@/Components/Pagination/Pagination.vue";
 import PerPageSelector from "@/Components/Pagination/PerPageSelector.vue";
 import TimerCreateForm from "@/Components/Timer/TimerCreateForm.vue";
 import TimerEditForm from "@/Components/Timer/TimerEditForm.vue";
+import useModal from "@/Composable/Modal/useModal.js";
 import usePaginator from "@/Composable/Pagination/usePaginator.js";
 import { splitTargetTimeIntoHoursAndMinutes } from "@/Composable/util.js";
 import { router } from "@inertiajs/vue3";
-import { ref, watch } from "vue";
+import { watch } from "vue";
 
-const props = defineProps({
+const { timers, task, meta, total_time } = defineProps({
   timers: Array,
   task: Object,
   meta: Object,
@@ -17,36 +18,21 @@ const props = defineProps({
 });
 
 const [targetHours, targetMinutes] = splitTargetTimeIntoHoursAndMinutes(
-  props.task.target_time
+  task.target_time
 );
-
-const [totalHours, totalMinutes] = splitTargetTimeIntoHoursAndMinutes(
-  props.total_time
-);
-
+const [totalHours, totalMinutes] =
+  splitTargetTimeIntoHoursAndMinutes(total_time);
 const [refTimers, refMeta, refDisplayPageNumbers, updatePaginator] =
-  usePaginator(props.timers, props.meta);
+  usePaginator(timers, meta);
+const [isOpenModal, openModal, closeModal, selectedTimer] = useModal();
 
 watch(
-  () => props.timers,
+  () => timers,
   (newTimers, _) => {
-    updatePaginator(newTimers, props.meta);
+    updatePaginator(newTimers, meta);
   },
   { deep: true }
 );
-
-const isOpenModal = ref(false);
-const selectedTimer = ref(null);
-
-const handleOpenModal = (timer = null) => {
-  selectedTimer.value = timer;
-  isOpenModal.value = true;
-};
-
-const handleCloseModal = () => {
-  selectedTimer.value = null;
-  isOpenModal.value = false;
-};
 
 const handleDelete = (id) => {
   router.delete(`/timers/${id}`, {
@@ -56,7 +42,7 @@ const handleDelete = (id) => {
 
 const getTimerList = async (perPage, page) => {
   const res = await fetch(
-    `/api/timers?task_id=${props.task.id}&per_page=${perPage}&page=${page}`
+    `/api/timers?task_id=${task.id}&per_page=${perPage}&page=${page}`
   );
   const data = await res.json();
   updatePaginator(data.timers, data.meta);
@@ -84,7 +70,7 @@ const getTimerList = async (perPage, page) => {
       </div>
       <button
         v-if="task.status === 1"
-        @click="handleOpenModal()"
+        @click="openModal()"
         class="text-sm px-4 py-1 font-semibold bg-indigo-500 text-white rounded-full"
       >
         タスク実行
@@ -121,7 +107,7 @@ const getTimerList = async (perPage, page) => {
             <button
               type="button"
               v-if="task.status === 1"
-              @click="handleOpenModal(timer)"
+              @click="openModal(timer)"
               class="text-sm px-4 py-1 font-semibold bg-orange-500 text-white rounded-full"
             >
               編集
@@ -140,7 +126,7 @@ const getTimerList = async (perPage, page) => {
         </tr>
       </tbody>
     </table>
-    <Modal :show="isOpenModal" @close="isOpenModal = false">
+    <Modal :show="isOpenModal" @close="closeModal">
       <div class="p-2 relative space-y-2 mt-2">
         <h2 class="text-center text-2xl font-bold">
           {{ selectedTimer ? "タイマー履歴編集" : "タイマー計測" }}
@@ -149,16 +135,16 @@ const getTimerList = async (perPage, page) => {
           v-if="selectedTimer !== null"
           :task="task"
           :timer="selectedTimer"
-          :closeModal="handleCloseModal"
+          :closeModal="closeModal"
         />
         <TimerCreateForm
           v-if="selectedTimer === null"
           :task="task"
           :timer="selectedTimer"
-          :closeModal="handleCloseModal"
+          :closeModal="closeModal"
         />
         <button
-          @click="handleCloseModal()"
+          @click="closeModal()"
           class="absolute top-2 right-3 bg-red-500 rounded-full text-sm text-white px-2 pb-0.5 font-bold"
         >
           x
@@ -167,4 +153,3 @@ const getTimerList = async (perPage, page) => {
     </Modal>
   </div>
 </template>
-@/Composable/Pagination/usePaginator.js
