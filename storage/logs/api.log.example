@@ -1,0 +1,562 @@
+[2024-09-13 07:24:31] local.INFO:
+start logging
+-----------------------------------------------------------
+request
+guard: web
+method: POST
+url: http://localhost:8888/login
+request params: {
+    "email": "aa@a.com",
+    "password": "aaaaaaaa"
+}
+action: App\Http\Controllers\Auth\AuthenticatedSessionController@store
+user_id: unAuthorized
+[2024-09-13 07:24:31] local.DEBUG: SQL Query Log:
+Query: select * from `users` where `email` = ? limit 1
+Bindings: [
+    "aa@a.com"
+]
+Time: 26.24ms
+[2024-09-13 07:24:31] local.INFO:
+response
+guard: web
+status: 200
+content: HTML Response
+-----------------------------------------------------------
+end logging
+
+[2024-09-13 07:24:31] local.DEBUG: SQL Query Log:
+Query: select * from `users` where `id` = ? limit 1
+Bindings: [
+    7
+]
+Time: 27.27ms
+[2024-09-13 07:24:31] local.INFO:
+start logging
+-----------------------------------------------------------
+request
+guard: web
+method: GET
+url: http://localhost:8888/tasks
+request params: []
+action: App\Http\Controllers\TaskController@index
+user_id: 7
+[2024-09-13 07:24:31] local.DEBUG: SQL Query Log:
+Query: select count(*) as aggregate from `tasks` where `tasks`.`deleted_at` is null
+Bindings: []
+Time: 2.31ms
+[2024-09-13 07:24:31] local.DEBUG: SQL Query Log:
+Query: select `id`, `title`, `content`, `begin`, `end`, `status`, `published`, `remarks`, `user_id` from `tasks` where `tasks`.`deleted_at` is null order by `id` desc limit 10 offset 0
+Bindings: []
+Time: 2.54ms
+[2024-09-13 07:24:31] local.DEBUG: SQL Query Log:
+Query: select `id`, `name` from `users` where `users`.`id` in (1, 6)
+Bindings: []
+Time: 1.85ms
+[2024-09-13 07:24:32] local.INFO:
+response
+guard: web
+status: 200
+content: {
+    "errors": [],
+    "auth": {
+        "user": {
+            "id": 7,
+            "name": "aaaaa",
+            "email": "aa@a.com",
+            "email_verified_at": null,
+            "created_at": "2024-09-10T16:29:51.000000Z",
+            "updated_at": "2024-09-10T16:29:51.000000Z"
+        }
+    },
+    "flash": {
+        "message": null,
+        "status": null
+    },
+    "tasks": [
+        {
+            "id": 62,
+            "title": "fffff",
+            "content": "mmmm",
+            "begin": "2024-07-15",
+            "end": null,
+            "status": 0,
+            "published": 0,
+            "remarks": null,
+            "user_id": 6,
+            "user": {
+                "id": 6,
+                "name": "testaa"
+            }
+        },
+        {
+            "id": 61,
+            "title": "\u3063\u3063d",
+            "content": null,
+            "begin": "2024-07-15",
+            "end": null,
+            "status": 0,
+            "published": 0,
+            "remarks": null,
+            "user_id": 6,
+            "user": {
+                "id": 6,
+                "name": "testaa"
+            }
+        },
+        {
+            "id": 60,
+            "title": "de",
+            "content": "de",
+            "begin": "2024-07-15",
+            "end": "2024-07-31",
+            "status": 1,
+            "published": 0,
+            "remarks": "dd",
+            "user_id": 6,
+            "user": {
+                "id": 6,
+                "name": "testaa"
+            }
+        },
+        {
+            "id": 59,
+            "title": "abc",
+            "content": "abc",
+            "begin": "2024-07-15",
+            "end": "2024-07-25",
+            "status": 1,
+            "published": 0,
+            "remarks": null,
+            "user_id": 6,
+            "user": {
+                "id": 6,
+                "name": "testaa"
+            }
+        },
+        {
+            "id": 58,
+            "title": "ddd",
+            "content": "ffff",
+            "begin": "2024-07-13",
+            "end": "2024-07-18",
+            "status": 1,
+            "published": 0,
+            "remarks": null,
+            "user_id": 6,
+            "user": {
+                "id": 6,
+                "name": "testaa"
+            }
+        },
+        {
+            "id": 57,
+            "title": "aaa",
+            "content": "dddd",
+            "begin": "2024-07-12",
+            "end": "2024-07-25",
+            "status": 1,
+            "published": 0,
+            "remarks": "aadd",
+            "user_id": 6,
+            "user": {
+                "id": 6,
+                "name": "testaa"
+            }
+        },
+        {
+            "id": 56,
+            "title": "aa",
+            "content": "fff",
+            "begin": "2024-03-15",
+            "end": null,
+            "status": 1,
+            "published": 0,
+            "remarks": null,
+            "user_id": 1,
+            "user": {
+                "id": 1,
+                "name": "User1"
+            }
+        },
+        {
+            "id": 55,
+            "title": "a",
+            "content": "ddd",
+            "begin": "2024-03-15",
+            "end": null,
+            "status": 0,
+            "published": 0,
+            "remarks": null,
+            "user_id": 1,
+            "user": {
+                "id": 1,
+                "name": "User1"
+            }
+        },
+        {
+            "id": 54,
+            "title": "a",
+            "content": "dd",
+            "begin": "2024-03-15",
+            "end": null,
+            "status": 0,
+            "published": 0,
+            "remarks": null,
+            "user_id": 1,
+            "user": {
+                "id": 1,
+                "name": "User1"
+            }
+        },
+        {
+            "id": 53,
+            "title": "aa",
+            "content": "dd",
+            "begin": "2024-03-15",
+            "end": null,
+            "status": 0,
+            "published": 0,
+            "remarks": null,
+            "user_id": 1,
+            "user": {
+                "id": 1,
+                "name": "User1"
+            }
+        }
+    ],
+    "meta": {
+        "current_page": 1,
+        "last_page": 7,
+        "per_page": 10,
+        "from": 1,
+        "to": 10,
+        "total": 62
+    }
+}
+-----------------------------------------------------------
+end logging
+
+[2024-09-13 07:24:36] local.DEBUG: SQL Query Log:
+Query: select * from `users` where `id` = ? limit 1
+Bindings: [
+    7
+]
+Time: 28.86ms
+[2024-09-13 07:24:36] local.INFO:
+start logging
+-----------------------------------------------------------
+request
+guard: api
+method: GET
+url: http://localhost:8888/api/searchTaskList?page=3&per_page=10
+request params: {
+    "per_page": "10",
+    "page": "3"
+}
+action: \App\Http\Controllers\Api\TaskController@searchTaskList
+user_id: 7
+[2024-09-13 07:24:36] local.DEBUG: SQL Query Log:
+Query: select count(*) as aggregate from `tasks` where `tasks`.`deleted_at` is null
+Bindings: []
+Time: 1.91ms
+[2024-09-13 07:24:36] local.DEBUG: SQL Query Log:
+Query: select `id`, `title`, `content`, `begin`, `end`, `status`, `published`, `remarks`, `user_id` from `tasks` where `tasks`.`deleted_at` is null order by `id` desc limit 10 offset 20
+Bindings: []
+Time: 2.22ms
+[2024-09-13 07:24:36] local.DEBUG: SQL Query Log:
+Query: select `id`, `name` from `users` where `users`.`id` in (2, 3, 4, 5)
+Bindings: []
+Time: 6.07ms
+[2024-09-13 07:24:36] local.INFO:
+response
+guard: api
+status: 200
+content: {
+    "tasks": [
+        {
+            "id": 42,
+            "title": "Perspiciat",
+            "content": null,
+            "begin": "1979-05-23",
+            "end": null,
+            "status": 1,
+            "published": 0,
+            "remarks": "Sed sit consequuntur aliquam aspernatur ",
+            "user_id": 4,
+            "user": {
+                "id": 4,
+                "name": "User4"
+            }
+        },
+        {
+            "id": 41,
+            "title": "Hic dolore",
+            "content": null,
+            "begin": "1991-11-25",
+            "end": null,
+            "status": 2,
+            "published": 0,
+            "remarks": "Suscipit quo harum et corrupti eos sit e",
+            "user_id": 5,
+            "user": {
+                "id": 5,
+                "name": "User5"
+            }
+        },
+        {
+            "id": 40,
+            "title": "Ut quos do",
+            "content": null,
+            "begin": "2001-02-11",
+            "end": null,
+            "status": 2,
+            "published": 0,
+            "remarks": "Deleniti sunt qui provident architecto e",
+            "user_id": 5,
+            "user": {
+                "id": 5,
+                "name": "User5"
+            }
+        },
+        {
+            "id": 39,
+            "title": "Exercitati",
+            "content": null,
+            "begin": "1993-03-26",
+            "end": null,
+            "status": 0,
+            "published": 0,
+            "remarks": "Sunt error culpa perspiciatis culpa dolo",
+            "user_id": 2,
+            "user": {
+                "id": 2,
+                "name": "User2"
+            }
+        },
+        {
+            "id": 38,
+            "title": "Aut sit no",
+            "content": null,
+            "begin": "2018-05-28",
+            "end": null,
+            "status": 1,
+            "published": 1,
+            "remarks": "Eum vero sunt optio et excepturi. Illum ",
+            "user_id": 5,
+            "user": {
+                "id": 5,
+                "name": "User5"
+            }
+        },
+        {
+            "id": 37,
+            "title": "In quibusd",
+            "content": null,
+            "begin": "1993-08-25",
+            "end": null,
+            "status": 2,
+            "published": 1,
+            "remarks": "Eaque impedit quasi molestiae autem quia",
+            "user_id": 5,
+            "user": {
+                "id": 5,
+                "name": "User5"
+            }
+        },
+        {
+            "id": 36,
+            "title": "Aut et qui",
+            "content": null,
+            "begin": "1980-11-11",
+            "end": null,
+            "status": 1,
+            "published": 0,
+            "remarks": "Voluptates fugit explicabo doloremque ip",
+            "user_id": 4,
+            "user": {
+                "id": 4,
+                "name": "User4"
+            }
+        },
+        {
+            "id": 35,
+            "title": "Voluptatum",
+            "content": null,
+            "begin": "2007-11-10",
+            "end": null,
+            "status": 2,
+            "published": 1,
+            "remarks": "Et rerum iste explicabo et rem enim. Sus",
+            "user_id": 2,
+            "user": {
+                "id": 2,
+                "name": "User2"
+            }
+        },
+        {
+            "id": 34,
+            "title": "Enim vero ",
+            "content": null,
+            "begin": "1991-08-14",
+            "end": null,
+            "status": 1,
+            "published": 0,
+            "remarks": "Tenetur occaecati enim amet. Aut asperna",
+            "user_id": 3,
+            "user": {
+                "id": 3,
+                "name": "User3"
+            }
+        },
+        {
+            "id": 33,
+            "title": "Aut quod q",
+            "content": null,
+            "begin": "2001-10-24",
+            "end": null,
+            "status": 0,
+            "published": 0,
+            "remarks": "Perferendis maiores quis excepturi hic. ",
+            "user_id": 3,
+            "user": {
+                "id": 3,
+                "name": "User3"
+            }
+        }
+    ],
+    "meta": {
+        "current_page": 3,
+        "last_page": 7,
+        "per_page": 10,
+        "from": 21,
+        "to": 30,
+        "total": 62
+    }
+}
+-----------------------------------------------------------
+end logging
+
+[2024-09-13 07:24:51] local.DEBUG: SQL Query Log:
+Query: select * from `users` where `id` = ? limit 1
+Bindings: [
+    7
+]
+Time: 30.54ms
+[2024-09-13 07:24:51] local.INFO:
+start logging
+-----------------------------------------------------------
+request
+guard: web
+method: GET
+url: http://localhost:8888/profile
+request params: []
+action: App\Http\Controllers\ProfileController@edit
+user_id: 7
+[2024-09-13 07:24:51] local.INFO:
+response
+guard: web
+status: 200
+content: {
+    "errors": [],
+    "auth": {
+        "user": {
+            "id": 7,
+            "name": "aaaaa",
+            "email": "aa@a.com",
+            "email_verified_at": null,
+            "created_at": "2024-09-10T16:29:51.000000Z",
+            "updated_at": "2024-09-10T16:29:51.000000Z"
+        }
+    },
+    "flash": {
+        "message": null,
+        "status": null
+    },
+    "mustVerifyEmail": false,
+    "status": null
+}
+-----------------------------------------------------------
+end logging
+[2024-09-13 07:33:36] local.DEBUG: SQL Query Log:
+Query: select * from `users` where `id` = ? limit 1
+Bindings: [
+    7
+]
+Time: 26.22ms
+[2024-09-13 07:33:36] local.INFO:
+start logging
+-----------------------------------------------------------
+request
+guard: api
+method: GET
+url: http://localhost:8888/api/searchTaskList?page=3&per_page=10
+request params: {
+    "per_page": "10",
+    "page": "3"
+}
+action: \App\Http\Controllers\Api\TaskController@searchTaskList
+user_id: 7
+[2024-09-13 07:33:36] local.DEBUG: SQL Query Log:
+Query: select count(*) as aggregate from `tasks` where `tasks`.`deleted_at` is null
+Bindings: []
+Time: 2.11ms
+[2024-09-13 07:33:36] local.DEBUG: SQL Query Log:
+Query: select `id`, `title`, `content`, `begin`, `end`, `status`, `published`, `remarks`, `user_id` from `tasks` where `tasks`.`deleted_at` is null order by `id` desc limit 10 offset 20
+Bindings: []
+Time: 2.04ms
+[2024-09-13 07:33:36] local.DEBUG: SQL Query Log:
+Query: select `id`, `name` from `users` where `users`.`id` in (2, 3, 4, 5)
+Bindings: []
+Time: 2.14ms
+[2024-09-13 07:33:36] local.ERROR: aaaaaa {"userId":7,"exception":"[object] (Exception(code: 0): aaaaaa at /Users/省略/app/Http/Controllers/Api/TaskController.php:24)
+[stacktrace]
+#0 /Users/省略/vendor/laravel/framework/src/Illuminate/Routing/Controller.php(54): App\\Http\\Controllers\\Api\\TaskController->searchTaskList(Object(Illuminate\\Http\\Request))
+省略
+[2024-09-13 07:33:36] local.WARNING:
+error response
+guard: api
+status: 500
+errors: ⬇︎
+[2024-09-13 07:33:36] local.INFO: array (
+  'message' => 'aaaaaa',
+  'exception' => 'Exception',
+  'file' => '/Users/省略/app/Http/Controllers/Api/TaskController.php',
+  'line' => 24,
+)
+[2024-09-13 07:33:36] local.INFO:
+-----------------------------------------------------------
+end logging
+[2024-09-13 07:38:08] local.INFO:
+start logging
+-----------------------------------------------------------
+request
+guard: web
+method: POST
+url: http://localhost:8888/login
+request params: {
+    "email": "a@a.com",
+    "password": "aaa"
+}
+action: App\Http\Controllers\Auth\AuthenticatedSessionController@store
+user_id: unAuthorized
+[2024-09-13 07:38:08] local.DEBUG: SQL Query Log:
+Query: select * from `users` where `email` = ? limit 1
+Bindings: [
+    "a@a.com"
+]
+Time: 23.74ms
+[2024-09-13 07:38:08] local.WARNING:
+error response
+guard: web
+status: 422
+errors: ⬇︎
+[2024-09-13 07:38:08] local.INFO: array (
+  'email' =>
+  array (
+    0 => 'ログイン情報が登録されていません。',
+  ),
+)
+[2024-09-13 07:38:08] local.INFO:
+-----------------------------------------------------------
+end logging
